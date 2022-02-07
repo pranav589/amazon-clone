@@ -1,5 +1,5 @@
 const Users = require("../models/userModel");
-const Payments=require('../models/paymentModel')
+const Payments = require("../models/paymentModel");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
@@ -42,7 +42,7 @@ const userController = {
       res.cookie("refreshtoken", refreshtoken, {
         httpOnly: true,
         path: "/user/refresh_token",
-        maxAge:7*24*60*1000
+        maxAge: 7 * 24 * 60 * 1000,
       });
 
       res.json({ accesstoken });
@@ -77,7 +77,7 @@ const userController = {
       res.cookie("refreshtoken", refreshtoken, {
         httpOnly: true,
         path: "/user/refresh_token",
-        maxAge:7*24*60*1000
+        maxAge: 7 * 24 * 60 * 1000,
       });
 
       res.json({ accesstoken });
@@ -125,28 +125,32 @@ const userController = {
       return res.status(500).json({ msg: err.message });
     }
   },
-  addCart:async (req,res)=>{
+  addCart: async (req, res) => {
     try {
-      const user=await Users.findById(req.user.id)
-      if(!user) return res.status(400).json({msg:"User does not exist."})
+      const user = await Users.findById(req.user.id);
+      if (!user) return res.status(400).json({ msg: "User does not exist." });
 
-      await Users.findByIdAndUpdate({_id:req.user.id},{
-        cart:req.body.cart
-      })
+      await Users.findByIdAndUpdate(
+        { _id: req.user.id },
+        {
+          cart: req.body.cart,
+        }
+      );
 
-      return res.json({msg:"Added to the cart."})
+      return res.json({ msg: "Added to the cart." });
     } catch (err) {
-      return res.status(500).json({msg:err.mesaage})
+      return res.status(500).json({ msg: err.mesaage });
     }
   },
-  history:async (req,res)=>{
+  history: async (req, res) => {
     try {
-      const history=await Payments.find({user_id:req.user.id})
-      res.json(history)
+      const history = await Payments.find({ user_id: req.user.id });
+      console.log(history);
+      res.json(history);
     } catch (err) {
-        return res.status(500).json({msg:err.message})
+      return res.status(500).json({ msg: err.message });
     }
-  }
+  },
 };
 
 //function for creating access token

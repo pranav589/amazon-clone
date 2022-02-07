@@ -1,39 +1,58 @@
-import React,{useContext} from 'react'
-import {Switch,Route} from 'react-router-dom'
-import Products from './products/Products'
-import DetailProduct from './detailProduct/DetailProduct'
-import Login from './auth/Login'
-import SignUp from './auth/SignUp'
-import Cart from './cart/Cart'
-import NotFound from './utils/notFound/NotFound'
-import {GlobalState} from '../../GlobalState'
-import OrderHistory from './history/OrderHistory'
-import OrderDetails from './history/OrderDetails'
-import Categories from './categories/Categories'
-import CreateProduct from './createProduct/CreateProduct'
-
+import React, { useContext } from "react";
+import { Routes, Route, Navigate } from "react-router-dom";
+import Products from "./products/Products";
+import DetailProduct from "./detailProduct/DetailProduct";
+import Login from "./auth/Login";
+import SignUp from "./auth/SignUp";
+import Cart from "./cart/Cart";
+import NotFound from "./utils/notFound/NotFound";
+import { GlobalState } from "../../GlobalState";
+import OrderHistory from "./history/OrderHistory";
+import OrderDetails from "./history/OrderDetails";
+import Categories from "./categories/Categories";
+import CreateProduct from "./createProduct/CreateProduct";
 
 function Pages() {
-    const state=useContext(GlobalState)
-    const[isLogged]=state.userAPI.isLogged
-    const [isAdmin]=state.userAPI.isAdmin
+  const state = useContext(GlobalState);
+  const [isLogged] = state.userAPI.isLogged;
+  const [isAdmin] = state.userAPI.isAdmin;
 
-    return (
-        <Switch>
-            <Route path='/' exact component={Products} />
-            <Route path='/detail/:id' exact component={DetailProduct}/>
-            <Route path='/login' exact component={isLogged ? Products : Login} />
-            <Route path='/signup' exact component={isLogged ? Products : SignUp} />
-            <Route path='/history' exact component={isLogged ? OrderHistory : NotFound}/>
-            <Route path='/history/:id' exact component={isLogged ? OrderDetails : NotFound}/>
-            <Route path='/category' exact component={isAdmin ? Categories : NotFound}/>
-            <Route path='/create_product' exact component={isAdmin ? CreateProduct : NotFound}/>
-            <Route path='/edit_product/:id' exact component={isAdmin ? CreateProduct : NotFound}/>
-            <Route path='/cart' exact component={Cart} />
-            <Route path='*' exact component={NotFound} />
-        </Switch>
-    
-    )
+  return (
+    <Routes>
+      <Route path="/" element={<Products />} />
+      <Route path="/detail/:id" element={<DetailProduct />} />
+      <Route
+        path="/login"
+        element={isLogged ? <Products /> : <Navigate to="/login" />}
+      />
+      <Route
+        path="/signup"
+        element={isLogged ? <Products /> : <Navigate to="/signup" />}
+      />
+      <Route
+        path="/history"
+        element={isLogged ? <OrderHistory /> : <NotFound />}
+      />
+      <Route
+        path="/history/:id"
+        element={isLogged ? <OrderDetails /> : <NotFound />}
+      />
+      <Route
+        path="/category"
+        element={isAdmin ? <Categories /> : <NotFound />}
+      />
+      <Route
+        path="/create_product"
+        element={isAdmin ? <CreateProduct /> : <NotFound />}
+      />
+      <Route
+        path="/edit_product/:id"
+        element={isAdmin ? <CreateProduct /> : <NotFound />}
+      />
+      <Route path="/cart" element={<Cart />} />
+      <Route path="*" element={<NotFound />} />
+    </Routes>
+  );
 }
 
-export default Pages
+export default Pages;

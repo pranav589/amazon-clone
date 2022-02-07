@@ -1,19 +1,18 @@
-import React, { useState, useContext,useEffect } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { GlobalState } from "../../../GlobalState";
 import axios from "axios";
 import Spinner from "../../shared/Spinner";
 import "../../../styles/createProduct.css";
-import {useHistory,useParams} from 'react-router-dom'
-
+import { useNavigate, useParams } from "react-router-dom";
 
 const initialState = {
   product_id: "",
   title: "",
   price: 0,
   description: "",
-  content:"",
+  content: "",
   category: "",
-  _id:""
+  _id: "",
 };
 
 function CreateProduct() {
@@ -24,28 +23,27 @@ function CreateProduct() {
   const [loading, setLoading] = useState(false);
   const [isAdmin] = state.userAPI.isAdmin;
   const [token] = state.token;
-  const history=useHistory()
-  const params=useParams()
-  const[products]=state.productsAPI.products
-  const [onEdit,setOnEdit]=useState(false)
-  const [callback,setCallback]=state.productsAPI.callback
+  const navigate = useNavigate();
+  const params = useParams();
+  const [products] = state.productsAPI.products;
+  const [onEdit, setOnEdit] = useState(false);
+  const [callback, setCallback] = state.productsAPI.callback;
 
-  useEffect(()=>{
-    if(params.id){
-      setOnEdit(true)
-      products.forEach(product=>{
-        if(product._id===params.id){
-          setProduct(product)
-          setImages(product.images)
+  useEffect(() => {
+    if (params.id) {
+      setOnEdit(true);
+      products.forEach((product) => {
+        if (product._id === params.id) {
+          setProduct(product);
+          setImages(product.images);
         }
-      })
-      
-    }else{
-      setProduct(initialState)
-      setImages(false)
-      setOnEdit(false)
+      });
+    } else {
+      setProduct(initialState);
+      setImages(false);
+      setOnEdit(false);
     }
-  },[params.id,products])
+  }, [params.id, products]);
 
   const handleUpload = async (e) => {
     e.preventDefault();
@@ -81,49 +79,59 @@ function CreateProduct() {
     display: images ? "block" : "none",
   };
 
-
-  const handleDestroy=async ()=>{
+  const handleDestroy = async () => {
     try {
-      if(!isAdmin) return alert("You are not an admin!")
-      setLoading(true)
-      await axios.post('/api/deleteItem',{public_id:images.public_id},{
-        headers:{Authorization:token}
-      })
-      setLoading(false)
-      setImages(false)
-
+      if (!isAdmin) return alert("You are not an admin!");
+      setLoading(true);
+      await axios.post(
+        "/api/deleteItem",
+        { public_id: images.public_id },
+        {
+          headers: { Authorization: token },
+        }
+      );
+      setLoading(false);
+      setImages(false);
     } catch (err) {
-      alert(err.response.data.msg)
+      alert(err.response.data.msg);
     }
-  }
+  };
 
-  const handleInputChange=e=>{
-    const {name,value}=e.target
-    setProduct({...product,[name]:value})
-  }
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setProduct({ ...product, [name]: value });
+  };
 
-  const handleSubmit=async e=>{
-    e.preventDefault()
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     try {
-      if(!isAdmin) return alert("You are not an admin!")
-      if(!images) return alert("No image uploaded!")
-      if(onEdit){
-        await axios.put(`/api/products/${product._id}`,{...product,images},{
-          headers:{Authorization:token}
-        })
-      }else{
-        await axios.post('/api/products',{...product,images},{
-          headers:{Authorization:token}
-        })
+      if (!isAdmin) return alert("You are not an admin!");
+      if (!images) return alert("No image uploaded!");
+      if (onEdit) {
+        await axios.put(
+          `/api/products/${product._id}`,
+          { ...product, images },
+          {
+            headers: { Authorization: token },
+          }
+        );
+      } else {
+        await axios.post(
+          "/api/products",
+          { ...product, images },
+          {
+            headers: { Authorization: token },
+          }
+        );
       }
-      setCallback(!callback)
-      setImages(false)
-      setProduct(initialState)
-      history.push('/')
+      setCallback(!callback);
+      setImages(false);
+      setProduct(initialState);
+      navigate("/");
     } catch (err) {
-      return alert(err.response.data.msg)
+      return alert(err.response.data.msg);
     }
-  }
+  };
 
   return (
     <div className="create_product">
@@ -207,7 +215,12 @@ function CreateProduct() {
 
         <div className="row">
           <label htmlFor="categories">Categories: </label>
-          <select name="category" id="category" value={product.category}  onChange={handleInputChange}>
+          <select
+            name="category"
+            id="category"
+            value={product.category}
+            onChange={handleInputChange}
+          >
             <option value="">Please Select A Category</option>
             {categories.map((category) => (
               <option value={category._id} key={category._id}>
