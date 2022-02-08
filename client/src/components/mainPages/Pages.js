@@ -23,11 +23,11 @@ function Pages() {
       <Route path="/detail/:id" element={<DetailProduct />} />
       <Route
         path="/login"
-        element={isLogged ? <Products /> : <Navigate to="/login" />}
+        element={isLogged ? <Products /> : <NotFound/>}
       />
       <Route
         path="/signup"
-        element={isLogged ? <Products /> : <Navigate to="/signup" />}
+        element={isLogged ? <Products /> : <NotFound />}
       />
       <Route
         path="/history"
