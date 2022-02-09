@@ -6,7 +6,6 @@ function UserAPI(token) {
   const [isAdmin, setIsAdmin] = useState(false);
   const [cart, setCart] = useState([]);
   const [history, setHistory] = useState([]);
-  const [callBack, setCallback] = useState(false);
 
   useEffect(() => {
     if (token) {
@@ -15,12 +14,10 @@ function UserAPI(token) {
           const res = await axios.get("/user/verify", {
             headers: { Authorization: token },
           });
-
           setIsLogged(true);
           res.data.role === 1 ? setIsAdmin(true) : setIsAdmin(false);
 
           setCart(res.data.cart);
-          console.log(res.data.cart.length);
         } catch (err) {
           alert(err.response.data.msg);
         }

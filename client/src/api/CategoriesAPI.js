@@ -1,4 +1,4 @@
-import  { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 
 function CategoriesAPI() {
@@ -8,7 +8,6 @@ function CategoriesAPI() {
   useEffect(() => {
     const getCategories = async () => {
       const res = await axios.get("/api/category");
-      //console.log(res)
       setCategories(res.data);
     };
     getCategories();

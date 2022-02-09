@@ -18,7 +18,6 @@ function ProductsAPI() {
         }&${category}&${sort}&title[regex]=${search}`
       );
       setProducts(res.data.products);
-      console.log(res);
       setResult(res.data.result);
     };
 

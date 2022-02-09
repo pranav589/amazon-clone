@@ -50,6 +50,7 @@ const userController = {
       return res.status(500).json({ msg: err.message });
     }
   },
+
   login: async (req, res) => {
     try {
       //extracting the data from rrequest
@@ -85,6 +86,7 @@ const userController = {
       return res.status(500).json({ msg: err.message });
     }
   },
+
   logout: async (req, res) => {
     try {
       //clearing the refresh token cookie
@@ -116,6 +118,7 @@ const userController = {
       return res.status(500).json({ msg: err.message });
     }
   },
+
   getUser: async (req, res) => {
     try {
       const user = await Users.findById(req.user.id).select("-password");

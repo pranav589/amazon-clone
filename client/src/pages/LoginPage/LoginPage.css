@@ -1,0 +1,82 @@
+.auth {
+    background-color: #fff;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 1rem;
+  }
+  
+  .auth__container {
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    border: 1px solid lightgray;
+  }
+  
+  .auth__container h1 {
+    font-weight: 500px;
+    margin-bottom: 20px;
+  }
+  
+  .auth__container form h5 {
+    margin-bottom: 5px;
+  }
+  
+  .auth__container form input,
+  .auth__container form textarea {
+    height: 30px;
+    margin-bottom: 10px;
+    background-color: #fff;
+    width: 98%;
+    padding: 0 5px;
+  }
+  
+  .auth__container form textarea {
+    height: 120px;
+    /* font-family: Roboto; */
+    padding-top: 5px;
+    border-width: 2px;
+    border-style: inset;
+    border-color: -internal-light-dark(rgb(118, 118, 118), rgb(133, 133, 133));
+    border-image: initial;
+  }
+  
+  .auth__container p {
+    margin-top: 15px;
+    font-size: 12px;
+  }
+  
+  .auth__logo {
+    width: 100px;
+    object-fit: contain;
+    margin: 20px 0;
+  }
+
+  .auth__signInButton {
+    background: #f0c14b;
+    border-radius: 2px;
+    width: 100%;
+    height: 30px;
+    border: 1px solid;
+    margin-top: 10px;
+    border-color: #a88734 #9c7e31 #846a29
+  }
+
+  .auth__signInButton:hover{
+    cursor: pointer;
+  }
+
+  .auth__registerButton {
+    border-radius: 2px;
+    width: 100%;
+    height: 30px;
+    border: 1px solid;
+    margin-top: 10px;
+    border-color: darkgray
+  }
+
+  .auth__registerButton:hover{
+      cursor: pointer;
+  }
