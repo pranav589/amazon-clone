@@ -2,9 +2,7 @@ import React, { useState } from "react";
 import "./LoginPage.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import {toast} from 'react-toastify'
-
-
+import { toast } from "react-toastify";
 
 function LoginPage() {
   const [user, setUser] = useState({
@@ -23,7 +21,36 @@ function LoginPage() {
     try {
       await axios.post("/user/login", { ...user });
       localStorage.setItem("firstLogin", true);
- 
+
+      window.location.href = "/";
+    } catch (err) {
+      toast.error(err.response.data.msg);
+    }
+  };
+
+  const loginGuestSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await axios.post("/user/login", {
+        email: "user@gmail.com",
+        password: "password",
+      });
+      localStorage.setItem("firstLogin", true);
+
+      window.location.href = "/";
+    } catch (err) {
+      toast.error(err.response.data.msg);
+    }
+  };
+  const loginGuestAdminSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await axios.post("/user/login", {
+        email: "admin@gmail.com",
+        password: "adminPassword",
+      });
+      localStorage.setItem("firstLogin", true);
+
       window.location.href = "/";
     } catch (err) {
       toast.error(err.response.data.msg);
@@ -58,7 +85,20 @@ function LoginPage() {
             Login
           </button>
         </form>
-
+        <button
+          type="submit"
+          className="auth__signInButton"
+          onClick={loginGuestSubmit}
+        >
+          Guest Login
+        </button>
+        <button
+          type="submit"
+          className="auth__signInButton"
+          onClick={loginGuestAdminSubmit}
+        >
+          Guest Admin
+        </button>
         <p>
           By continuing, you agree to Amazon's Conditions of Use and Privacy
           Notice.

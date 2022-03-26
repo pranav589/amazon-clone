@@ -118,6 +118,12 @@ function CartPage() {
 
       <div className="total">
         <h3>Total: $ {total}</h3>
+        <p>
+          <strong>Test Email-</strong> sb-fdp9i13294340@personal.example.com
+        </p>
+        <p>
+          <strong>Test Password-</strong> 4y&_*bD8
+        </p>
         <PaypalButton total={total} tranSuccess={tranSuccess} />
       </div>
     </div>
