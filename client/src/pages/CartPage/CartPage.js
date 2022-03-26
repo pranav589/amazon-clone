@@ -122,7 +122,7 @@ function CartPage() {
           <strong>Test Email-</strong> sb-fdp9i13294340@personal.example.com
         </p>
         <p>
-          <strong>Test Password-</strong> 4y&_*bD8
+          <strong>Test Password-</strong> testPassword
         </p>
         <PaypalButton total={total} tranSuccess={tranSuccess} />
       </div>
